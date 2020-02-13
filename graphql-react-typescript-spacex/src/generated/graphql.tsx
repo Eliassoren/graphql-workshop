@@ -708,6 +708,21 @@ export type LaunchProfileQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type RocketListQueryVariables = {};
+
+export type RocketListQuery = { __typename?: "Query" } & {
+  rockets: Maybe<
+    Array<
+      Maybe<
+        { __typename?: "Rocket" } & Pick<
+          Rocket,
+          "id" | "active" | "rocket_name" | "flickr_images"
+        > & { mass: Maybe<{ __typename?: "Mass" } & Pick<Mass, "kg">> }
+      >
+    >
+  >;
+};
+
 import gql from "graphql-tag";
 import * as React from "react";
 import * as ReactApollo from "react-apollo";
@@ -831,4 +846,61 @@ export function useLaunchProfileQuery(
     LaunchProfileQuery,
     LaunchProfileQueryVariables
   >(LaunchProfileDocument, baseOptions);
+}
+export const RocketListDocument = gql`
+  query RocketList {
+    rockets {
+      id
+      active
+      mass {
+        kg
+      }
+      rocket_name
+      flickr_images
+    }
+  }
+`;
+
+export const RocketListComponent = (
+  props: Omit<
+    Omit<
+      ReactApollo.QueryProps<RocketListQuery, RocketListQueryVariables>,
+      "query"
+    >,
+    "variables"
+  > & { variables?: RocketListQueryVariables }
+) => (
+  <ReactApollo.Query<RocketListQuery, RocketListQueryVariables>
+    query={RocketListDocument}
+    {...props}
+  />
+);
+
+export type RocketListProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<RocketListQuery, RocketListQueryVariables>
+> &
+  TChildProps;
+export function withRocketList<TProps, TChildProps = {}>(
+  operationOptions?: ReactApollo.OperationOption<
+    TProps,
+    RocketListQuery,
+    RocketListQueryVariables,
+    RocketListProps<TChildProps>
+  >
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    RocketListQuery,
+    RocketListQueryVariables,
+    RocketListProps<TChildProps>
+  >(RocketListDocument, operationOptions);
+}
+
+export function useRocketListQuery(
+  baseOptions?: ReactApolloHooks.QueryHookOptions<RocketListQueryVariables>
+) {
+  return ReactApolloHooks.useQuery<RocketListQuery, RocketListQueryVariables>(
+    RocketListDocument,
+    baseOptions
+  );
 }

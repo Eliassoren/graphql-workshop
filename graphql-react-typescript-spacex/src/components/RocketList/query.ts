@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const QUERY_ROCKETS = gql`
-query RocketQuery {
+query RocketList {
     rockets{
       id,
       active,
