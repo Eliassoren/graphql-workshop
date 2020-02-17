@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 
 const client = new ApolloClient({
-  uri: 'https://spacexdata.herokuapp.com/graphql',
+  uri: 'https://graphql-pokemon.now.sh/graphql',
 });
 
 ReactDOM.render(

@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'https://spacexdata.herokuapp.com/graphql'
+schema: https://graphql-pokemon.now.sh/graphql
 documents: './src/components/**/*.ts'
 generates:
   src/generated/graphql.tsx:
